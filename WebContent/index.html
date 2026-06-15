@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking Application</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="container">
+            <h1 class="logo">BankingApp</h1>
+            <nav>
+                <a href="#" onclick="showPage('dashboard')">Dashboard</a>
+                <a href="#" onclick="showPage('bank')">Bank</a>
+                <a href="#" onclick="showPage('branch')">Branch</a>
+                <a href="#" onclick="showPage('customer')">Customer</a>
+                <a href="#" onclick="showPage('account')">Account</a>
+                <a href="#" onclick="showPage('transaction')">Transactions</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Dashboard Page -->
+        <div id="dashboard" class="page active">
+            <h2>Welcome to Banking System</h2>
+            <p>Select an option from the navigation to manage your bank operations.</p>
+            <div class="cards">
+                <div class="card">
+                    <h3>Create Bank</h3>
+                    <p>Set up a new bank</p>
+                    <button onclick="showPage('bank')">Go</button>
+                </div>
+                <div class="card">
+                    <h3>Manage Branches</h3>
+                    <p>Create and view bank branches</p>
+                    <button onclick="showPage('branch')">Go</button>
+                </div>
+                <div class="card">
+                    <h3>Manage Customers</h3>
+                    <p>Create and view customers</p>
+                    <button onclick="showPage('customer')">Go</button>
+                </div>
+                <div class="card">
+                    <h3>Accounts</h3>
+                    <p>Create and manage accounts</p>
+                    <button onclick="showPage('account')">Go</button>
+                </div>
+                <div class="card">
+                    <h3>Transactions</h3>
+                    <p>Deposit, withdraw, view history</p>
+                    <button onclick="showPage('transaction')">Go</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bank Page -->
+        <div id="bank" class="page">
+            <h2>Bank Management</h2>
+            <div class="form-section">
+                <h3>Create Bank</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Bank ID:</label>
+                        <input type="number" id="bankId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Bank Name:</label>
+                        <input type="text" id="bankName" required>
+                    </div>
+                    <button type="button" onclick="createBank()">Create Bank</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>View Bank</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Bank ID:</label>
+                        <input type="number" id="viewBankId" required>
+                    </div>
+                    <button type="button" onclick="viewBank()">View Bank</button>
+                </form>
+            </div>
+
+            <div id="bankResult" class="result"></div>
+        </div>
+
+        <!-- Branch Page -->
+        <div id="branch" class="page">
+            <h2>Branch Management</h2>
+            <div class="form-section">
+                <h3>Create Branch</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Branch ID:</label>
+                        <input type="number" id="branchId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Branch Name:</label>
+                        <input type="text" id="branchName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Bank ID:</label>
+                        <input type="number" id="branchBankId" required>
+                    </div>
+                    <button type="button" onclick="createBranch()">Create Branch</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>View Branch</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Branch ID:</label>
+                        <input type="number" id="viewBranchId" required>
+                    </div>
+                    <button type="button" onclick="viewBranch()">View Branch</button>
+                </form>
+            </div>
+
+            <div id="branchResult" class="result"></div>
+        </div>
+
+        <!-- Customer Page -->
+        <div id="customer" class="page">
+            <h2>Customer Management</h2>
+            <div class="form-section">
+                <h3>Create Customer</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Customer ID:</label>
+                        <input type="number" id="customerId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" id="customerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Username:</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="password" placeholder="Optional">
+                    </div>
+                    <button type="button" onclick="createCustomer()">Create Customer</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>View Customer</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Customer ID:</label>
+                        <input type="number" id="viewCustomerId" required>
+                    </div>
+                    <button type="button" onclick="viewCustomer()">View Customer</button>
+                </form>
+            </div>
+
+            <div id="customerResult" class="result"></div>
+        </div>
+
+        <!-- Account Page -->
+        <div id="account" class="page">
+            <h2>Account Management</h2>
+            <div class="form-section">
+                <h3>Create Account</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Account ID:</label>
+                        <input type="number" id="accountId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Customer ID:</label>
+                        <input type="number" id="accountCustomerId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Initial Balance:</label>
+                        <input type="number" id="accountBalance" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Account Type:</label>
+                        <select id="accountType">
+                            <option value="savings">Savings</option>
+                            <option value="current">Current</option>
+                        </select>
+                    </div>
+                    <button type="button" onclick="createAccount()">Create Account</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>View Account</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Account ID:</label>
+                        <input type="number" id="viewAccountId" required>
+                    </div>
+                    <button type="button" onclick="viewAccount()">View Account</button>
+                </form>
+            </div>
+
+            <div id="accountResult" class="result"></div>
+        </div>
+
+        <!-- Transaction Page -->
+        <div id="transaction" class="page">
+            <h2>Transactions</h2>
+            <div class="form-section">
+                <h3>Deposit</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Account ID:</label>
+                        <input type="number" id="depositAccountId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Amount:</label>
+                        <input type="number" id="depositAmount" step="0.01" required>
+                    </div>
+                    <button type="button" onclick="deposit()">Deposit</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>Withdraw</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Account ID:</label>
+                        <input type="number" id="withdrawAccountId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Amount:</label>
+                        <input type="number" id="withdrawAmount" step="0.01" required>
+                    </div>
+                    <button type="button" onclick="withdraw()">Withdraw</button>
+                </form>
+            </div>
+
+            <div id="transactionResult" class="result"></div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
