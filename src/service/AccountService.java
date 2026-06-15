@@ -1,12 +1,7 @@
 package service;
 
 import model.Account;
-import model.Transaction;
-
 import repository.AccountRepository;
-
-import enums.TransactionStatus;
-import enums.TransactionType;
 
 import java.util.List;
 
@@ -35,6 +30,16 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
+    public List<Account> getAccountsByCustomerId(int customerId) {
+
+        return accountRepository.findByCustomerId(customerId);
+    }
+
+    public List<Account> getAccountsByBranchId(int branchId) {
+
+        return accountRepository.findByBranchId(branchId);
+    }
+
     public void deposit(
             int accountId,
             double amount) {
@@ -42,21 +47,15 @@ public class AccountService {
         Account account =
                 accountRepository.findById(accountId);
 
+        if (account == null) {
+            throw new IllegalArgumentException("Account not found");
+        }
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount must be greater than zero");
+        }
+
         account.setBalance(
                 account.getBalance() + amount);
-
-        Transaction transaction =
-                new Transaction(
-                        1,
-                        amount,
-                        TransactionType.DEPOSIT,
-                        TransactionStatus.SUCCESS,
-                        account,
-                        account
-                );
-
-        account.getTransactions()
-                .add(transaction);
     }
 
     public void withdraw(
@@ -66,23 +65,17 @@ public class AccountService {
         Account account =
                 accountRepository.findById(accountId);
 
-        if(account.getBalance() >= amount) {
-
-            account.setBalance(
-                    account.getBalance() - amount);
-
-            Transaction transaction =
-                    new Transaction(
-                            2,
-                            amount,
-                            TransactionType.WITHDRAW,
-                            TransactionStatus.SUCCESS,
-                            account,
-                            account
-                    );
-
-            account.getTransactions()
-                    .add(transaction);
+        if (account == null) {
+            throw new IllegalArgumentException("Account not found");
         }
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount must be greater than zero");
+        }
+        if (account.getBalance() < amount) {
+            throw new IllegalArgumentException("Insufficient balance");
+        }
+
+        account.setBalance(
+                account.getBalance() - amount);
     }
 }

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard | BankingApp</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="container">
+            <h1 class="logo">BankingApp Employee</h1>
+            <nav>
+                <a href="#" onclick="showPage('dashboard')">Dashboard</a>
+                <a href="#" onclick="showPage('assignedBranch'); loadAssignedBranch()">My Branch</a>
+                <a href="#" onclick="showPage('branchAccounts'); loadBranchAccounts()">Branch Accounts</a>
+                <a href="#" onclick="showPage('bank')">Bank</a>
+                <a href="#" onclick="showPage('branch')">Branch</a>
+                <a href="#" onclick="showPage('customer')">Customer</a>
+                <a href="#" onclick="showPage('employee')">Employee</a>
+                <a href="#" onclick="showPage('account')">Account</a>
+                <a href="/BankingApp/logout">Logout</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Dashboard Page -->
+        <div id="dashboard" class="page active">
+            <h2>Welcome, <span data-user-name>Employee</span></h2>
+            <p>Select an option from the navigation to manage your bank operations.</p>
+            <div class="cards">
+                <div class="card">
+                    <h3>View Assigned Branch</h3>
+                    <p>View your assigned branch and bank.</p>
+                    <button onclick="showPage('assignedBranch'); loadAssignedBranch()">Go</button>
+                </div>
+                <div class="card">
+                    <h3>View Branch Accounts</h3>
+                    <p>Search accounts and review balances in your branch.</p>
+                    <button onclick="showPage('branchAccounts'); loadBranchAccounts()">Go</button>
+                </div>
+                <div class="card">
+                    <h3>Create Bank</h3>
+                    <p>Set up a new bank</p>
+                    <button onclick="showPage('bank')">Go</button>
+                </div>
+                <div class="card">
+                    <h3>Manage Branches</h3>
+                    <p>Create and view bank branches</p>
+                    <button onclick="showPage('branch')">Go</button>
+                </div>
+                <div class="card">
+                    <h3>Manage Customers</h3>
+                    <p>Create and view customers</p>
+                    <button onclick="showPage('customer')">Go</button>
+                </div>
+                <div class="card">
+                    <h3>Manage Employees</h3>
+                    <p>Create and view employees</p>
+                    <button onclick="showPage('employee')">Go</button>
+                </div>
+                <div class="card">
+                    <h3>Accounts</h3>
+                    <p>Create and manage accounts</p>
+                    <button onclick="showPage('account')">Go</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="assignedBranch" class="page">
+            <h2>Assigned Branch</h2>
+            <div id="assignedBranchResult" class="form-section"></div>
+        </div>
+
+        <div id="branchAccounts" class="page">
+            <h2>Accounts In My Branch</h2>
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Search by Account ID:</label>
+                    <input type="number" id="branchAccountSearchId">
+                </div>
+                <button type="button" onclick="searchBranchAccount()">Search</button>
+                <button type="button" onclick="loadBranchAccounts()">Show All</button>
+                <div id="branchAccountsResult" class="table-container"></div>
+            </div>
+        </div>
+
+        <!-- Bank Page -->
+        <div id="bank" class="page">
+            <h2>Bank Management</h2>
+            <div class="form-section">
+                <h3>Create Bank</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Bank ID:</label>
+                        <input type="number" id="bankId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Bank Name:</label>
+                        <input type="text" id="bankName" required>
+                    </div>
+                    <button type="button" onclick="createBank()">Create Bank</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>View Bank</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Bank ID:</label>
+                        <input type="number" id="viewBankId" required>
+                    </div>
+                    <button type="button" onclick="viewBank()">View Bank</button>
+                </form>
+            </div>
+
+            <div id="bankResult" class="result"></div>
+        </div>
+
+        <!-- Branch Page -->
+        <div id="branch" class="page">
+            <h2>Branch Management</h2>
+            <div class="form-section">
+                <h3>Create Branch</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Branch ID:</label>
+                        <input type="number" id="branchId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Branch Name:</label>
+                        <input type="text" id="branchName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Bank ID:</label>
+                        <input type="number" id="branchBankId" required>
+                    </div>
+                    <button type="button" onclick="createBranch()">Create Branch</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>View Branch</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Branch ID:</label>
+                        <input type="number" id="viewBranchId" required>
+                    </div>
+                    <button type="button" onclick="viewBranch()">View Branch</button>
+                </form>
+            </div>
+
+            <div id="branchResult" class="result"></div>
+        </div>
+
+        <!-- Customer Page -->
+        <div id="customer" class="page">
+            <h2>Customer Management</h2>
+            <div class="form-section">
+                <h3>Create Customer</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Customer ID:</label>
+                        <input type="number" id="customerId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" id="customerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Username:</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="button" onclick="createCustomer()">Create Customer</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>View Customer</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Customer ID:</label>
+                        <input type="number" id="viewCustomerId" required>
+                    </div>
+                    <button type="button" onclick="viewCustomer()">View Customer</button>
+                </form>
+            </div>
+
+            <div id="customerResult" class="result"></div>
+        </div>
+
+        <!-- Employee Page -->
+        <div id="employee" class="page">
+            <h2>Employee Management</h2>
+            <div class="form-section">
+                <h3>Create Employee</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Employee ID:</label>
+                        <input type="number" id="employeeId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" id="employeeName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>User ID:</label>
+                        <input type="text" id="employeeUserId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="employeePassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Branch ID:</label>
+                        <input type="number" id="employeeBranchId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Salary:</label>
+                        <input type="number" id="employeeSalary" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Designation:</label>
+                        <select id="employeeRole">
+                            <option value="BRANCH_MANAGER">Branch Manager</option>
+                            <option value="RELATION_MANAGER">Relationship Manager</option>
+                            <option value="CASHIER">Cashier</option>
+                        </select>
+                    </div>
+                    <button type="button" onclick="createEmployee()">Create Employee</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>View Employee</h3>
+                <div class="form-group">
+                    <label>Employee ID:</label>
+                    <input type="number" id="viewEmployeeId" required>
+                </div>
+                <button type="button" onclick="viewEmployee()">View Employee</button>
+            </div>
+
+            <div id="employeeResult" class="result"></div>
+        </div>
+
+        <!-- Account Page -->
+        <div id="account" class="page">
+            <h2>Account Management</h2>
+            <div class="form-section">
+                <h3>Create Account</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Account ID:</label>
+                        <input type="number" id="accountId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Customer ID:</label>
+                        <input type="number" id="accountCustomerId" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Initial Balance:</label>
+                        <input type="number" id="accountBalance" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Account Type:</label>
+                        <select id="accountType">
+                            <option value="savings">Savings</option>
+                            <option value="current">Current</option>
+                        </select>
+                    </div>
+                    <button type="button" onclick="createAccount()">Create Account</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>View Account</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Account ID:</label>
+                        <input type="number" id="viewAccountId" required>
+                    </div>
+                    <button type="button" onclick="viewAccount()">View Account</button>
+                </form>
+            </div>
+
+            <div id="accountResult" class="result"></div>
+        </div>
+
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/session.js"></script>
+    <script>requireRole('EMPLOYEE');</script>
+</body>
+</html>

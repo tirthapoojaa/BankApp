@@ -47,4 +47,34 @@ public class Branch {
     public Bank getBank() {
         return bank;
     }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void addCustomer(Customer customer) {
+        if (!customers.contains(customer)) {
+            customers.add(customer);
+        }
+    }
+
+    public void addEmployee(Employee employee) {
+        if (!employees.contains(employee)) {
+            employees.add(employee);
+        }
+    }
+
+    public void addAccount(Account account) {
+        if (!accounts.contains(account)) {
+            accounts.add(account);
+        }
+    }
 }

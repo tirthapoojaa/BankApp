@@ -31,9 +31,27 @@ public class CustomerServlet extends HttpServlet {
                 String name = request.getParameter("name");
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
+                String branchIdValue = request.getParameter("branchId");
+                Branch branch = null;
 
-                Customer customer = new Customer(customerId, name, username, password, null);
-                customerService.createCustomer(customer);
+                if (branchIdValue != null && !branchIdValue.isEmpty()) {
+                    branch = ApplicationServices.BRANCH.getBranch(
+                            Integer.parseInt(branchIdValue));
+                    if (branch == null) {
+                        out.println("{\"status\": \"error\", \"message\": \"Branch not found\"}");
+                        return;
+                    }
+                }
+
+                Customer customer = customerService.registerCustomer(
+                        customerId,
+                        name,
+                        username,
+                        password,
+                        branch);
+                if (branch != null) {
+                    branch.addCustomer(customer);
+                }
 
                 out.println("{\"status\": \"success\", \"message\": \"Customer created successfully\"}");
             } catch (Exception e) {
@@ -55,7 +73,7 @@ public class CustomerServlet extends HttpServlet {
                 Customer customer = customerService.getCustomer(customerId);
 
                 if (customer != null) {
-                    out.println("{\"status\": \"success\", \"customerId\": " + customer.getUserId()
+                    out.println("{\"status\": \"success\", \"customerId\": " + customer.getCustomerId()
                             + ", \"name\": \"" + customer.getName()
                             + "\", \"username\": \"" + customer.getUsername() + "\"}");
                 } else {

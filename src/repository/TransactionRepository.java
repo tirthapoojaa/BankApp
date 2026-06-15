@@ -10,6 +10,8 @@ public interface TransactionRepository {
 
     Transaction findById(int id);
 
+    List<Transaction> findByAccountId(int accountId);
+
     List<Transaction> findAll();
 
     void delete(int id);

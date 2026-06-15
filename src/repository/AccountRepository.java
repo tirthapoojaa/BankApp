@@ -10,6 +10,10 @@ public interface AccountRepository {
 
     Account findById(int id);
 
+    List<Account> findByCustomerId(int customerId);
+
+    List<Account> findByBranchId(int branchId);
+
     List<Account> findAll();
 
     void delete(int id);

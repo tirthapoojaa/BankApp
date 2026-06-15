@@ -32,4 +32,9 @@ public class TransactionService {
 
         return transactionRepository.findAll();
     }
+
+    public List<Transaction> getTransactionsByAccountId(int accountId) {
+
+        return transactionRepository.findByAccountId(accountId);
+    }
 }

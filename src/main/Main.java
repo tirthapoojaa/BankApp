@@ -23,13 +23,16 @@ public class Main {
         CustomerRepositoryImpl customerRepo = new CustomerRepositoryImpl();
         AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
         TransactionRepositoryImpl transactionRepo = new TransactionRepositoryImpl();
+        UserRepositoryImpl userRepo = new UserRepositoryImpl();
 
         // =========================
         // SERVICES
         // =========================
         BankService bankService = new BankService(bankRepo);
         BranchService branchService = new BranchService(branchRepo);
-        CustomerService customerService = new CustomerService(customerRepo);
+        AuthenticationService authenticationService = new AuthenticationService(userRepo);
+        CustomerService customerService = new CustomerService(
+                customerRepo, authenticationService);
         AccountService accountService = new AccountService(accountRepo);
         TransactionService transactionService = new TransactionService(transactionRepo);
 

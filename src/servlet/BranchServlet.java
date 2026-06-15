@@ -25,6 +25,30 @@ public class BranchServlet extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
 
+        if ("list".equals(request.getParameter("action"))) {
+            StringBuilder json = new StringBuilder(
+                    "{\"status\":\"success\",\"branches\":[");
+            java.util.List<Branch> branches = branchService.getAllBranches();
+
+            for (int index = 0; index < branches.size(); index++) {
+                if (index > 0) {
+                    json.append(',');
+                }
+                Branch branch = branches.get(index);
+                json.append("{\"branchId\":")
+                        .append(branch.getBranchId())
+                        .append(",\"branchName\":\"")
+                        .append(branch.getBranchName())
+                        .append("\",\"bankName\":\"")
+                        .append(branch.getBank().getBankName())
+                        .append("\"}");
+            }
+
+            json.append("]}");
+            out.println(json);
+            return;
+        }
+
         if (!"view".equals(request.getParameter("action"))) {
             out.println("{\"status\": \"error\", \"message\": \"Invalid action\"}");
             return;
@@ -53,6 +77,12 @@ public class BranchServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
+
+        if (!"/api/branch".equals(request.getServletPath())) {
+            response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+            out.println("{\"status\": \"error\", \"message\": \"Method not allowed\"}");
+            return;
+        }
 
         String action = request.getParameter("action");
 

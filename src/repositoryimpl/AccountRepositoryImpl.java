@@ -24,6 +24,32 @@ public class AccountRepositoryImpl
     }
 
     @Override
+    public List<Account> findByCustomerId(int customerId) {
+
+        List<Account> matches = new ArrayList<>();
+        for (Account account : accounts.values()) {
+            if (account.getCustomer() != null
+                    && account.getCustomer().getCustomerId() == customerId) {
+                matches.add(account);
+            }
+        }
+        return matches;
+    }
+
+    @Override
+    public List<Account> findByBranchId(int branchId) {
+
+        List<Account> matches = new ArrayList<>();
+        for (Account account : accounts.values()) {
+            if (account.getBranch() != null
+                    && account.getBranch().getBranchId() == branchId) {
+                matches.add(account);
+            }
+        }
+        return matches;
+    }
+
+    @Override
     public List<Account> findAll() {
 
         return new ArrayList<>(accounts.values());

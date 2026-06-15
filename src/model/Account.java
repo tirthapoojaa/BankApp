@@ -65,6 +65,10 @@ public abstract class Account {
         this.status = status;
     }
 
+    public String getAccountType() {
+        return getClass().getSimpleName().replace("Account", "");
+    }
+
     @Override
     public String toString() {
 

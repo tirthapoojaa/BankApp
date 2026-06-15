@@ -29,6 +29,22 @@ public class TransactionRepositoryImpl
     }
 
     @Override
+    public List<Transaction> findByAccountId(int accountId) {
+
+        List<Transaction> matches = new ArrayList<>();
+        for (Transaction transaction : transactions.values()) {
+            boolean fromMatches = transaction.getFromAccount() != null
+                    && transaction.getFromAccount().getAccountId() == accountId;
+            boolean toMatches = transaction.getToAccount() != null
+                    && transaction.getToAccount().getAccountId() == accountId;
+            if (fromMatches || toMatches) {
+                matches.add(transaction);
+            }
+        }
+        return matches;
+    }
+
+    @Override
     public List<Transaction> findAll() {
 
         return new ArrayList<>(

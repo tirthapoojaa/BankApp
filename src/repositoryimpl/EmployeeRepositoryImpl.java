@@ -14,13 +14,19 @@ public class EmployeeRepositoryImpl
     @Override
     public void save(Employee employee) {
 
-        employees.put(employee.getUserId(), employee);
+        employees.put(employee.getEmployeeId(), employee);
     }
 
     @Override
     public Employee findById(int id) {
 
         return employees.get(id);
+    }
+
+    @Override
+    public boolean exists(int id) {
+
+        return employees.containsKey(id);
     }
 
     @Override

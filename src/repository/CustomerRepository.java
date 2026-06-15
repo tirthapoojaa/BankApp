@@ -10,6 +10,8 @@ public interface CustomerRepository {
 
     Customer findById(int id);
 
+    boolean exists(int id);
+
     List<Customer> findAll();
 
     void delete(int id);

@@ -1,26 +1,37 @@
 package model;
 
+import enums.Role;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Customer extends User {
 
-    private Branch branch;
+    private static final long serialVersionUID = 1L;
 
-    private List<Account> accounts;
+    private int customerId;
+
+    private transient Branch branch;
+
+    private transient List<Account> accounts;
 
     public Customer(
-            int userId,
-            String name,
-            String username,
-            String password,
+            int customerId,
+            String fullName,
+            String userId,
+            String passwordHash,
             Branch branch) {
 
-        super(userId, name, username, password);
+        super(userId, passwordHash, fullName, Role.CUSTOMER);
 
+        this.customerId = customerId;
         this.branch = branch;
 
         this.accounts = new ArrayList<>();
+    }
+
+    public int getCustomerId() {
+        return customerId;
     }
 
     public Branch getBranch() {
@@ -28,6 +39,9 @@ public class Customer extends User {
     }
 
     public List<Account> getAccounts() {
+        if (accounts == null) {
+            accounts = new ArrayList<>();
+        }
         return accounts;
     }
 
@@ -37,15 +51,15 @@ public class Customer extends User {
 
     public void addAccount(Account account) {
 
-        accounts.add(account);
+        getAccounts().add(account);
     }
 
     @Override
     public String toString() {
 
         return "Customer{" +
-                "userId=" + userId +
-                ", name='" + name + '\'' +
+                "customerId=" + customerId +
+                ", fullName='" + fullName + '\'' +
                 '}';
     }
 }

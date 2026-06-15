@@ -10,6 +10,8 @@ public interface EmployeeRepository {
 
     Employee findById(int id);
 
+    boolean exists(int id);
+
     List<Employee> findAll();
 
     void delete(int id);

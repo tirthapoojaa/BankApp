@@ -1,24 +1,66 @@
 package model;
 
 import enums.EmployeeRole;
+import enums.Role;
 
 public class Employee extends User {
 
-    private Branch branch;
+    private static final long serialVersionUID = 1L;
 
-    private EmployeeRole role;
+    private int employeeId;
+
+    private transient Branch branch;
+
+    private EmployeeRole employeeRole;
+
+    private double salary;
 
     public Employee(
-            int userId,
-            String name,
-            String username,
-            String password,
+            int employeeId,
+            String fullName,
+            String userId,
+            String passwordHash,
             Branch branch,
-            EmployeeRole role) {
+            EmployeeRole employeeRole) {
 
-        super(userId, name, username, password);
+        this(employeeId, fullName, userId, passwordHash,
+                branch, employeeRole, 0.0);
+    }
 
+    public Employee(
+            int employeeId,
+            String fullName,
+            String userId,
+            String passwordHash,
+            Branch branch,
+            EmployeeRole employeeRole,
+            double salary) {
+
+        super(userId, passwordHash, fullName, Role.EMPLOYEE);
+
+        this.employeeId = employeeId;
         this.branch = branch;
-        this.role = role;
+        this.employeeRole = employeeRole;
+        this.salary = salary;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public EmployeeRole getEmployeeRole() {
+        return employeeRole;
+    }
+
+    public String getDesignation() {
+        return employeeRole.name();
+    }
+
+    public double getSalary() {
+        return salary;
     }
 }

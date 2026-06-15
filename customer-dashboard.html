@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard | BankingApp</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="container">
+            <h1 class="logo">BankingApp Customer</h1>
+            <nav>
+                <a href="#" onclick="showPage('dashboard')">Dashboard</a>
+                <a href="#" onclick="showPage('createAccount')">Create Account</a>
+                <a href="#" onclick="showPage('accounts'); loadMyAccounts()">My Accounts</a>
+                <a href="#" onclick="showPage('transaction')">Transactions</a>
+                <a href="/BankingApp/logout">Logout</a>
+            </nav>
+        </div>
+    </div>
+
+    <main class="container">
+        <section id="dashboard" class="page active">
+            <h2>Welcome, <span data-user-name>Customer</span></h2>
+            <p>View your accounts and securely perform transactions.</p>
+            <div class="cards">
+                <div class="card">
+                    <h3>Create Account</h3>
+                    <p>Open a savings or current account.</p>
+                    <button onclick="showPage('createAccount')">Open</button>
+                </div>
+                <div class="card">
+                    <h3>View My Accounts</h3>
+                    <p>See only accounts registered to you.</p>
+                    <button onclick="showPage('accounts'); loadMyAccounts()">Open</button>
+                </div>
+                <div class="card">
+                    <h3>Transactions</h3>
+                    <p>Deposit, withdraw and review history.</p>
+                    <button onclick="showPage('transaction')">Open</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="createAccount" class="page">
+            <h2>Create Account</h2>
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Account ID:</label>
+                    <input type="number" id="accountId" required>
+                </div>
+                <div class="form-group">
+                    <label>Branch ID:</label>
+                    <input type="number" id="accountBranchId" value="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Initial Balance:</label>
+                    <input type="number" id="accountBalance" min="0" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Account Type:</label>
+                    <select id="accountType">
+                        <option value="savings">Savings</option>
+                        <option value="current">Current</option>
+                    </select>
+                </div>
+                <button type="button" onclick="createAccount()">Create Account</button>
+            </div>
+            <div id="accountResult" class="result"></div>
+        </section>
+
+        <section id="accounts" class="page">
+            <h2>My Accounts</h2>
+            <div class="form-section">
+                <button type="button" onclick="loadMyAccounts()">Refresh Accounts</button>
+                <div id="myAccountsResult" class="table-container"></div>
+            </div>
+        </section>
+
+        <section id="transaction" class="page">
+            <h2>Transactions</h2>
+            <div class="form-section">
+                <h3>Deposit</h3>
+                <div class="form-group">
+                    <label>Account ID:</label>
+                    <input type="number" id="depositAccountId" required>
+                </div>
+                <div class="form-group">
+                    <label>Amount:</label>
+                    <input type="number" id="depositAmount" min="0.01" step="0.01" required>
+                </div>
+                <button type="button" onclick="deposit()">Deposit</button>
+            </div>
+
+            <div class="form-section">
+                <h3>Withdraw</h3>
+                <div class="form-group">
+                    <label>Account ID:</label>
+                    <input type="number" id="withdrawAccountId" required>
+                </div>
+                <div class="form-group">
+                    <label>Amount:</label>
+                    <input type="number" id="withdrawAmount" min="0.01" step="0.01" required>
+                </div>
+                <button type="button" onclick="withdraw()">Withdraw</button>
+            </div>
+
+            <div class="form-section">
+                <h3>Transaction History</h3>
+                <div class="form-group">
+                    <label>Account ID:</label>
+                    <input type="number" id="historyAccountId" required>
+                </div>
+                <button type="button" onclick="viewTransactions()">View History</button>
+            </div>
+            <div id="transactionResult" class="result"></div>
+        </section>
+
+    </main>
+
+    <script src="js/app.js"></script>
+    <script src="js/session.js"></script>
+    <script>requireRole('CUSTOMER');</script>
+</body>
+</html>

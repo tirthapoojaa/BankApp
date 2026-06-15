@@ -1,59 +1,91 @@
 package model;
 
-public abstract class User {
+import enums.Role;
 
-    protected int userId;
+import java.io.Serializable;
+import java.util.Objects;
 
-    protected String name;
+public abstract class User implements Serializable {
 
-    protected String username;
+    private static final long serialVersionUID = 1L;
 
-    protected String password;
+    protected String userId;
+
+    protected String passwordHash;
+
+    protected String fullName;
+
+    protected Role role;
 
     public User() {
     }
 
     public User(
-            int userId,
-            String name,
-            String username,
-            String password) {
+            String userId,
+            String passwordHash,
+            String fullName,
+            Role role) {
 
         this.userId = userId;
-        this.name = name;
-        this.username = username;
-        this.password = password;
+        this.passwordHash = passwordHash;
+        this.fullName = fullName;
+        this.role = role;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public String getName() {
-        return name;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFullName() {
+        return fullName;
     }
 
-    public String getPassword() {
-        return password;
+    public Role getRole() {
+        return role;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getName() {
+        return fullName;
+    }
+
+    public String getUsername() {
+        return userId;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof User)) {
+            return false;
+        }
+        User user = (User) object;
+        return Objects.equals(userId, user.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
     }
 }

@@ -19,10 +19,8 @@ public class CustomerController {
             String password,
             Branch branch) {
 
-        Customer customer =
-                new Customer(id, name, username, password, branch);
-
-        customerService.createCustomer(customer);
+        customerService.registerCustomer(
+                id, name, username, password, branch);
 
         System.out.println("Customer created successfully");
     }

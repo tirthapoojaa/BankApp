@@ -121,9 +121,9 @@ function createCustomer() {
     const customerId = document.getElementById('customerId').value;
     const customerName = document.getElementById('customerName').value;
     const username = document.getElementById('username').value;
-    const password = document.getElementById('password')?.value || 'default123';
+    const password = document.getElementById('password').value;
 
-    if (!customerId || !customerName || !username) {
+    if (!customerId || !customerName || !username || !password) {
         showResult('customerResult', 'Please fill in all fields', false);
         return;
     }
@@ -146,6 +146,68 @@ function createCustomer() {
         }
     })
     .catch(error => showResult('customerResult', 'Error: ' + error, false));
+}
+
+// Employee Operations
+function createEmployee() {
+    const values = {
+        action: 'create',
+        employeeId: document.getElementById('employeeId').value,
+        name: document.getElementById('employeeName').value,
+        userId: document.getElementById('employeeUserId').value,
+        password: document.getElementById('employeePassword').value,
+        branchId: document.getElementById('employeeBranchId').value,
+        employeeRole: document.getElementById('employeeRole').value,
+        salary: document.getElementById('employeeSalary').value
+    };
+
+    if (!values.employeeId || !values.name || !values.userId
+            || !values.password || !values.branchId || !values.salary) {
+        showResult('employeeResult', 'Please fill in all required fields', false);
+        return;
+    }
+
+    fetch('/BankingApp/api/employee', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams(values)
+    })
+    .then(response => response.json())
+    .then(data => {
+        showResult('employeeResult', data.message, data.status === 'success');
+        if (data.status === 'success') {
+            ['employeeId', 'employeeName', 'employeeUserId',
+                'employeePassword', 'employeeBranchId', 'employeeSalary']
+                .forEach(id => document.getElementById(id).value = '');
+        }
+    })
+    .catch(error => showResult('employeeResult', 'Error: ' + error, false));
+}
+
+function viewEmployee() {
+    const employeeId = document.getElementById('viewEmployeeId').value;
+
+    if (!employeeId) {
+        showResult('employeeResult', 'Please enter Employee ID', false);
+        return;
+    }
+
+    fetch(`/BankingApp/api/employee?employeeId=${employeeId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                showResult(
+                    'employeeResult',
+                    `${data.name} (${data.userId}) - ${data.employeeRole}`,
+                    true
+                );
+            } else {
+                showResult('employeeResult', data.message, false);
+            }
+        })
+        .catch(error => showResult('employeeResult', 'Error: ' + error, false));
 }
 
 function viewCustomer() {
@@ -171,13 +233,27 @@ function viewCustomer() {
 // Account Operations
 function createAccount() {
     const accountId = document.getElementById('accountId').value;
-    const customerId = document.getElementById('accountCustomerId').value;
+    const customerId = document.getElementById('accountCustomerId')?.value;
+    const branchId = document.getElementById('accountBranchId')?.value;
     const balance = document.getElementById('accountBalance').value;
     const accountType = document.getElementById('accountType').value;
 
-    if (!accountId || !customerId || !balance) {
+    if (!accountId || balance === '' || (!customerId && !branchId)) {
         showResult('accountResult', 'Please fill in all fields', false);
         return;
+    }
+
+    const body = new URLSearchParams({
+        action: 'create',
+        accountId,
+        balance,
+        accountType
+    });
+    if (customerId) {
+        body.set('customerId', customerId);
+    }
+    if (branchId) {
+        body.set('branchId', branchId);
     }
 
     fetch('/BankingApp/api/account', {
@@ -185,14 +261,16 @@ function createAccount() {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: `action=create&accountId=${accountId}&customerId=${customerId}&balance=${balance}&accountType=${accountType}`
+        body
     })
     .then(response => response.json())
     .then(data => {
         showResult('accountResult', data.message, data.status === 'success');
         if (data.status === 'success') {
             document.getElementById('accountId').value = '';
-            document.getElementById('accountCustomerId').value = '';
+            if (document.getElementById('accountCustomerId')) {
+                document.getElementById('accountCustomerId').value = '';
+            }
             document.getElementById('accountBalance').value = '';
         }
     })
@@ -211,12 +289,78 @@ function viewAccount() {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                showResult('accountResult', `Account ${data.accountId} - Balance: $${data.balance} - Status: ${data.status}`, true);
+                const account = data.account;
+                showResult(
+                    'accountResult',
+                    `Account ${account.accountId} - ${account.accountType} - Balance: $${account.balance} - Status: ${account.accountStatus}`,
+                    true
+                );
             } else {
                 showResult('accountResult', data.message, false);
             }
         })
         .catch(error => showResult('accountResult', 'Error: ' + error, false));
+}
+
+function loadMyAccounts() {
+    fetch('/BankingApp/api/account?action=myAccounts')
+        .then(response => response.json())
+        .then(data => renderAccounts(
+            'myAccountsResult',
+            data.accounts || [],
+            data.message
+        ))
+        .catch(error => renderMessage('myAccountsResult', 'Error: ' + error, false));
+}
+
+function loadAssignedBranch() {
+    fetch('/BankingApp/api/employee?action=assignedBranch')
+        .then(response => response.json())
+        .then(data => {
+            const element = document.getElementById('assignedBranchResult');
+            if (data.status !== 'success') {
+                element.textContent = data.message;
+                return;
+            }
+            element.innerHTML = `
+                <p><strong>Branch ID:</strong> ${data.branchId}</p>
+                <p><strong>Branch Name:</strong> ${data.branchName}</p>
+                <p><strong>Bank:</strong> ${data.bankName} (${data.bankId})</p>
+                <p><strong>Designation:</strong> ${data.designation}</p>
+            `;
+        })
+        .catch(error => renderMessage(
+            'assignedBranchResult', 'Error: ' + error, false));
+}
+
+function loadBranchAccounts() {
+    fetch('/BankingApp/api/account?action=branchAccounts')
+        .then(response => response.json())
+        .then(data => renderAccounts(
+            'branchAccountsResult',
+            data.accounts || [],
+            data.message
+        ))
+        .catch(error => renderMessage(
+            'branchAccountsResult', 'Error: ' + error, false));
+}
+
+function searchBranchAccount() {
+    const accountId = document.getElementById('branchAccountSearchId').value;
+    if (!accountId) {
+        renderMessage('branchAccountsResult', 'Enter an Account ID', false);
+        return;
+    }
+
+    fetch(`/BankingApp/api/account?action=search&accountId=${accountId}`)
+        .then(response => response.json())
+        .then(data => renderAccounts(
+            'branchAccountsResult',
+            data.account ? [data.account] : [],
+            data.message
+        ))
+        .catch(error => renderMessage(
+            'branchAccountsResult', 'Error: ' + error, false));
 }
 
 // Transaction Operations
@@ -274,6 +418,84 @@ function withdraw() {
     .catch(error => showResult('transactionResult', 'Error: ' + error, false));
 }
 
+function viewTransactions() {
+    const accountId = document.getElementById('historyAccountId').value;
+
+    if (!accountId) {
+        showResult('transactionResult', 'Please enter Account ID', false);
+        return;
+    }
+
+    fetch(`/BankingApp/api/transaction?action=view&accountId=${accountId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status !== 'success') {
+                showResult('transactionResult', data.message, false);
+                return;
+            }
+
+            const transactions = data.transactions || [];
+            if (transactions.length === 0) {
+                showResult('transactionResult', 'No transactions found', true);
+                return;
+            }
+
+            const lines = transactions.map(transaction =>
+                `#${transaction.transactionId} ${transaction.type}: $${transaction.amount} (${transaction.transactionStatus})`
+            );
+            showResult('transactionResult', lines.join('\n'), true);
+        })
+        .catch(error => showResult('transactionResult', 'Error: ' + error, false));
+}
+
+function renderAccounts(elementId, accounts, errorMessage) {
+    const element = document.getElementById(elementId);
+    if (!element) {
+        return;
+    }
+    if (errorMessage) {
+        renderMessage(elementId, errorMessage, false);
+        return;
+    }
+    if (accounts.length === 0) {
+        renderMessage(elementId, 'No accounts found', true);
+        return;
+    }
+
+    const rows = accounts.map(account => `
+        <tr>
+            <td>${account.accountId}</td>
+            <td>${account.customerName}</td>
+            <td>${account.branchName}</td>
+            <td>${account.accountType}</td>
+            <td>$${Number(account.balance).toFixed(2)}</td>
+            <td>${account.accountStatus}</td>
+        </tr>
+    `).join('');
+
+    element.innerHTML = `
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Account</th>
+                    <th>Customer</th>
+                    <th>Branch</th>
+                    <th>Type</th>
+                    <th>Balance</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+        </table>
+    `;
+}
+
+function renderMessage(elementId, message, isSuccess) {
+    const element = document.getElementById(elementId);
+    element.textContent = message;
+    element.classList.toggle('success', isSuccess);
+    element.classList.toggle('error', !isSuccess);
+}
 // Utility function to display results
 function showResult(elementId, message, isSuccess) {
     const resultElement = document.getElementById(elementId);
