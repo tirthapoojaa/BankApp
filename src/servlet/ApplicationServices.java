@@ -53,14 +53,16 @@ final class ApplicationServices {
         BRANCH.createBranch(branch);
         bank.addBranch(branch);
 
-        EMPLOYEE.registerEmployee(
-                1,
-                "System Employee",
-                "employee",
-                "admin123",
-                branch,
-                EmployeeRole.BRANCH_MANAGER,
-                0.0);
+        if (EMPLOYEE.getEmployee(1) == null) {
+            EMPLOYEE.registerEmployee(
+                    1,
+                    "System Employee",
+                    "employee",
+                    "admin123",
+                    branch,
+                    EmployeeRole.BRANCH_MANAGER,
+                    0.0);
+        }
     }
 
     private ApplicationServices() {

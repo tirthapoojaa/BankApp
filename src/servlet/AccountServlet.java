@@ -183,6 +183,7 @@ public class AccountServlet extends HttpServlet {
     private void assignCustomerToBranch(Customer customer, Branch branch) {
         if (customer.getBranch() == null) {
             customer.setBranch(branch);
+            customerService.createCustomer(customer);
         }
         branch.addCustomer(customer);
     }

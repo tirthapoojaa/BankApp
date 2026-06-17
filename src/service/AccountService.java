@@ -56,6 +56,7 @@ public class AccountService {
 
         account.setBalance(
                 account.getBalance() + amount);
+        accountRepository.save(account);
     }
 
     public void withdraw(
@@ -77,5 +78,6 @@ public class AccountService {
 
         account.setBalance(
                 account.getBalance() - amount);
+        accountRepository.save(account);
     }
 }

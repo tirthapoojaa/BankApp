@@ -62,9 +62,11 @@ public class TransactionServlet extends HttpServlet {
 
             if ("deposit".equals(action)) {
                 accountService.deposit(accountId, amount);
+                account = accountService.getAccount(accountId);
                 type = TransactionType.DEPOSIT;
             } else if ("withdraw".equals(action)) {
                 accountService.withdraw(accountId, amount);
+                account = accountService.getAccount(accountId);
                 type = TransactionType.WITHDRAW;
             } else {
                 writeError(out, "Invalid action");
