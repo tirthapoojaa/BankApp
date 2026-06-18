@@ -19,6 +19,10 @@ async function requireRole(expectedRole) {
             .forEach(element => element.textContent = user.fullName);
         document.querySelectorAll('[data-user-id]')
             .forEach(element => element.textContent = user.userId);
+        if (expectedRole === 'EMPLOYEE'
+                && typeof configureEmployeeDashboard === 'function') {
+            configureEmployeeDashboard(user);
+        }
     } catch (error) {
         window.location.replace('/BankingApp/login.html');
     }

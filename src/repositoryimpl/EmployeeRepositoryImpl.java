@@ -41,7 +41,7 @@ public class EmployeeRepositoryImpl
             statement.setInt(1, employee.getEmployeeId());
             statement.setString(2, employee.getUserId());
             statement.setInt(3, employee.getBranch().getBranchId());
-            statement.setString(4, employee.getEmployeeRole().name());
+            statement.setString(4, employee.getDesignation());
             statement.setDouble(5, employee.getSalary());
             statement.executeUpdate();
         } catch (SQLException exception) {
@@ -150,7 +150,15 @@ public class EmployeeRepositoryImpl
                 resultSet.getString("user_id"),
                 resultSet.getString("password_hash"),
                 branch,
-                EmployeeRole.valueOf(resultSet.getString("employee_role")),
+                employeeRole(resultSet.getString("employee_role")),
                 resultSet.getDouble("salary"));
+    }
+
+    private EmployeeRole employeeRole(String value) {
+
+        if ("RELATION_MANAGER".equals(value)) {
+            return EmployeeRole.RELATIONSHIP_MANAGER;
+        }
+        return EmployeeRole.valueOf(value);
     }
 }

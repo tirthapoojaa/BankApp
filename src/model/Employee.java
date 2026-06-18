@@ -57,7 +57,9 @@ public class Employee extends User {
     }
 
     public String getDesignation() {
-        return employeeRole.name();
+        return employeeRole == EmployeeRole.RELATION_MANAGER
+                ? EmployeeRole.RELATIONSHIP_MANAGER.name()
+                : employeeRole.name();
     }
 
     public double getSalary() {

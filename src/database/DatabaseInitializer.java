@@ -56,6 +56,8 @@ public final class DatabaseInitializer {
                     + "FOREIGN KEY (user_id) REFERENCES users(user_id), "
                     + "FOREIGN KEY (branch_id) REFERENCES branches(branch_id)"
                     + ")");
+            statement.executeUpdate("ALTER TABLE employees "
+                    + "MODIFY employee_role VARCHAR(40) NOT NULL");
 
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS accounts ("
                     + "account_id INT PRIMARY KEY, "

@@ -3,6 +3,7 @@ package servlet;
 import enums.TransactionStatus;
 import enums.TransactionType;
 import model.Account;
+import model.Employee;
 import model.Transaction;
 import model.User;
 import service.AccountService;
@@ -143,6 +144,13 @@ public class TransactionServlet extends HttpServlet {
 
     private boolean ownsAccount(HttpServletRequest request, Account account) {
         User user = (User) request.getSession().getAttribute("user");
+        if (user instanceof Employee) {
+            Employee employee = (Employee) user;
+            return account.getBranch() != null
+                    && employee.getBranch() != null
+                    && account.getBranch().getBranchId()
+                    == employee.getBranch().getBranchId();
+        }
         return account.getCustomer() != null
                 && account.getCustomer().getUserId().equals(user.getUserId());
     }

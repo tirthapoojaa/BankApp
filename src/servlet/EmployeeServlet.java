@@ -56,7 +56,7 @@ public class EmployeeServlet extends HttpServlet {
             String password = request.getParameter("password");
             String confirmPassword = request.getParameter("confirmPassword");
             String branchIdValue = request.getParameter("branchId");
-            EmployeeRole employeeRole = EmployeeRole.valueOf(
+            EmployeeRole employeeRole = employeeRole(
                     request.getParameter("employeeRole"));
             double salary = Double.parseDouble(request.getParameter("salary"));
 
@@ -144,5 +144,13 @@ public class EmployeeServlet extends HttpServlet {
             out.println("{\"status\": \"error\", \"message\": \""
                     + exception.getMessage() + "\"}");
         }
+    }
+
+    private EmployeeRole employeeRole(String value) {
+
+        if ("RELATION_MANAGER".equals(value)) {
+            return EmployeeRole.RELATIONSHIP_MANAGER;
+        }
+        return EmployeeRole.valueOf(value);
     }
 }

@@ -10,15 +10,16 @@
     <div class="navbar">
         <div class="container">
             <h1 class="logo">BankingApp Employee</h1>
-            <nav>
+            <nav id="employeeNav">
                 <a href="#" onclick="showPage('dashboard')">Dashboard</a>
-                <a href="#" onclick="showPage('assignedBranch'); loadAssignedBranch()">My Branch</a>
-                <a href="#" onclick="showPage('branchAccounts'); loadBranchAccounts()">Branch Accounts</a>
+                <a href="#" onclick="openEmployeePage('assignedBranch', 'loadAssignedBranch')">My Branch</a>
+                <a href="#" onclick="openEmployeePage('branchAccounts', 'loadBranchAccounts')">Branch Accounts</a>
                 <a href="#" onclick="showPage('bank')">Bank</a>
                 <a href="#" onclick="showPage('branch')">Branch</a>
                 <a href="#" onclick="showPage('customer')">Customer</a>
                 <a href="#" onclick="showPage('employee')">Employee</a>
                 <a href="#" onclick="showPage('account')">Account</a>
+                <a href="#" onclick="showPage('transaction')">Transactions</a>
                 <a href="/BankingApp/logout">Logout</a>
             </nav>
         </div>
@@ -29,51 +30,56 @@
         <div id="dashboard" class="page active">
             <h2>Welcome, <span data-user-name>Employee</span></h2>
             <p>Select an option from the navigation to manage your bank operations.</p>
-            <div class="cards">
+            <div class="cards" id="employeeDashboardCards">
                 <div class="card">
                     <h3>View Assigned Branch</h3>
                     <p>View your assigned branch and bank.</p>
-                    <button onclick="showPage('assignedBranch'); loadAssignedBranch()">Go</button>
+                    <button type="button" onclick="openEmployeePage('assignedBranch', 'loadAssignedBranch')">Go</button>
                 </div>
                 <div class="card">
                     <h3>View Branch Accounts</h3>
                     <p>Search accounts and review balances in your branch.</p>
-                    <button onclick="showPage('branchAccounts'); loadBranchAccounts()">Go</button>
+                    <button type="button" onclick="openEmployeePage('branchAccounts', 'loadBranchAccounts')">Go</button>
                 </div>
                 <div class="card">
-                    <h3>Create Bank</h3>
-                    <p>Set up a new bank</p>
-                    <button onclick="showPage('bank')">Go</button>
+                    <h3>Bank Management</h3>
+                    <p>Create or view bank records.</p>
+                    <button type="button" onclick="showPage('bank')">Go</button>
                 </div>
                 <div class="card">
-                    <h3>Manage Branches</h3>
-                    <p>Create and view bank branches</p>
-                    <button onclick="showPage('branch')">Go</button>
+                    <h3>Branch Management</h3>
+                    <p>Create or view branch records.</p>
+                    <button type="button" onclick="showPage('branch')">Go</button>
                 </div>
                 <div class="card">
-                    <h3>Manage Customers</h3>
-                    <p>Create and view customers</p>
-                    <button onclick="showPage('customer')">Go</button>
+                    <h3>Customer Management</h3>
+                    <p>Create or view customer records.</p>
+                    <button type="button" onclick="showPage('customer')">Go</button>
                 </div>
                 <div class="card">
-                    <h3>Manage Employees</h3>
-                    <p>Create and view employees</p>
-                    <button onclick="showPage('employee')">Go</button>
+                    <h3>Employee Management</h3>
+                    <p>Create or view employee records.</p>
+                    <button type="button" onclick="showPage('employee')">Go</button>
                 </div>
                 <div class="card">
-                    <h3>Accounts</h3>
-                    <p>Create and manage accounts</p>
-                    <button onclick="showPage('account')">Go</button>
+                    <h3>Account Management</h3>
+                    <p>Create or view account records.</p>
+                    <button type="button" onclick="showPage('account')">Go</button>
+                </div>
+                <div class="card">
+                    <h3>Transactions</h3>
+                    <p>Deposit, withdraw, or view transaction history.</p>
+                    <button type="button" onclick="showPage('transaction')">Go</button>
                 </div>
             </div>
         </div>
 
-        <div id="assignedBranch" class="page">
+        <div id="assignedBranch" class="page" data-page-permission="assignedBranch">
             <h2>Assigned Branch</h2>
             <div id="assignedBranchResult" class="form-section"></div>
         </div>
 
-        <div id="branchAccounts" class="page">
+        <div id="branchAccounts" class="page" data-page-permission="branchAccounts">
             <h2>Accounts In My Branch</h2>
             <div class="form-section">
                 <div class="form-group">
@@ -87,9 +93,9 @@
         </div>
 
         <!-- Bank Page -->
-        <div id="bank" class="page">
+        <div id="bank" class="page" data-page-permission="viewBank">
             <h2>Bank Management</h2>
-            <div class="form-section">
+            <div class="form-section" data-permission="createBank">
                 <h3>Create Bank</h3>
                 <form>
                     <div class="form-group">
@@ -104,7 +110,7 @@
                 </form>
             </div>
 
-            <div class="form-section">
+            <div class="form-section" data-permission="viewBank">
                 <h3>View Bank</h3>
                 <form>
                     <div class="form-group">
@@ -119,9 +125,9 @@
         </div>
 
         <!-- Branch Page -->
-        <div id="branch" class="page">
+        <div id="branch" class="page" data-page-permission="viewBranch">
             <h2>Branch Management</h2>
-            <div class="form-section">
+            <div class="form-section" data-permission="createBranch">
                 <h3>Create Branch</h3>
                 <form>
                     <div class="form-group">
@@ -140,7 +146,7 @@
                 </form>
             </div>
 
-            <div class="form-section">
+            <div class="form-section" data-permission="viewBranch">
                 <h3>View Branch</h3>
                 <form>
                     <div class="form-group">
@@ -155,9 +161,9 @@
         </div>
 
         <!-- Customer Page -->
-        <div id="customer" class="page">
+        <div id="customer" class="page" data-page-permission="viewCustomer">
             <h2>Customer Management</h2>
-            <div class="form-section">
+            <div class="form-section" data-permission="createCustomer">
                 <h3>Create Customer</h3>
                 <form>
                     <div class="form-group">
@@ -180,7 +186,7 @@
                 </form>
             </div>
 
-            <div class="form-section">
+            <div class="form-section" data-permission="viewCustomer">
                 <h3>View Customer</h3>
                 <form>
                     <div class="form-group">
@@ -195,9 +201,9 @@
         </div>
 
         <!-- Employee Page -->
-        <div id="employee" class="page">
+        <div id="employee" class="page" data-page-permission="viewEmployee">
             <h2>Employee Management</h2>
-            <div class="form-section">
+            <div class="form-section" data-permission="createEmployee">
                 <h3>Create Employee</h3>
                 <form>
                     <div class="form-group">
@@ -228,7 +234,7 @@
                         <label>Designation:</label>
                         <select id="employeeRole">
                             <option value="BRANCH_MANAGER">Branch Manager</option>
-                            <option value="RELATION_MANAGER">Relationship Manager</option>
+                            <option value="RELATIONSHIP_MANAGER">Relationship Manager</option>
                             <option value="CASHIER">Cashier</option>
                         </select>
                     </div>
@@ -236,7 +242,7 @@
                 </form>
             </div>
 
-            <div class="form-section">
+            <div class="form-section" data-permission="viewEmployee">
                 <h3>View Employee</h3>
                 <div class="form-group">
                     <label>Employee ID:</label>
@@ -249,9 +255,9 @@
         </div>
 
         <!-- Account Page -->
-        <div id="account" class="page">
+        <div id="account" class="page" data-page-permission="viewAccount">
             <h2>Account Management</h2>
-            <div class="form-section">
+            <div class="form-section" data-permission="createAccount">
                 <h3>Create Account</h3>
                 <form>
                     <div class="form-group">
@@ -277,7 +283,7 @@
                 </form>
             </div>
 
-            <div class="form-section">
+            <div class="form-section" data-permission="viewAccount">
                 <h3>View Account</h3>
                 <form>
                     <div class="form-group">
@@ -291,10 +297,50 @@
             <div id="accountResult" class="result"></div>
         </div>
 
+        <div id="transaction" class="page" data-page-permission="transactionHistory">
+            <h2>Transactions</h2>
+            <div class="form-section" data-permission="deposit">
+                <h3>Deposit</h3>
+                <div class="form-group">
+                    <label>Account ID:</label>
+                    <input type="number" id="depositAccountId" required>
+                </div>
+                <div class="form-group">
+                    <label>Amount:</label>
+                    <input type="number" id="depositAmount" step="0.01" required>
+                </div>
+                <button type="button" onclick="deposit()">Deposit</button>
+            </div>
+
+            <div class="form-section" data-permission="withdraw">
+                <h3>Withdraw</h3>
+                <div class="form-group">
+                    <label>Account ID:</label>
+                    <input type="number" id="withdrawAccountId" required>
+                </div>
+                <div class="form-group">
+                    <label>Amount:</label>
+                    <input type="number" id="withdrawAmount" step="0.01" required>
+                </div>
+                <button type="button" onclick="withdraw()">Withdraw</button>
+            </div>
+
+            <div class="form-section" data-permission="transactionHistory">
+                <h3>Transaction History</h3>
+                <div class="form-group">
+                    <label>Account ID:</label>
+                    <input type="number" id="historyAccountId" required>
+                </div>
+                <button type="button" onclick="viewTransactions()">View History</button>
+            </div>
+
+            <div id="transactionResult" class="result"></div>
+        </div>
+
     </div>
 
-    <script src="js/app.js"></script>
-    <script src="js/session.js"></script>
+    <script src="js/app.js?v=20260617-rbac-dashboard"></script>
+    <script src="js/session.js?v=20260617-rbac-dashboard"></script>
     <script>requireRole('EMPLOYEE');</script>
 </body>
 </html>

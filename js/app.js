@@ -1,10 +1,180 @@
+let employeePermissions = new Set();
+
+const employeePages = [
+    {
+        page: 'dashboard',
+        label: 'Dashboard',
+        title: 'Dashboard',
+        description: 'View your permitted employee actions.'
+    },
+    {
+        page: 'assignedBranch',
+        permission: 'assignedBranch',
+        label: 'My Branch',
+        title: 'View Assigned Branch',
+        description: 'View your assigned branch and bank.',
+        onOpen: 'loadAssignedBranch'
+    },
+    {
+        page: 'branchAccounts',
+        permission: 'branchAccounts',
+        label: 'Branch Accounts',
+        title: 'View Branch Accounts',
+        description: 'Search accounts and review balances in your branch.',
+        onOpen: 'loadBranchAccounts'
+    },
+    {
+        page: 'bank',
+        permission: 'viewBank',
+        label: 'Bank',
+        title: 'Bank Management',
+        description: 'Create or view bank records.'
+    },
+    {
+        page: 'branch',
+        permission: 'viewBranch',
+        label: 'Branch',
+        title: 'Branch Management',
+        description: 'Create or view branch records.'
+    },
+    {
+        page: 'customer',
+        permission: 'viewCustomer',
+        label: 'Customer',
+        title: 'Customer Management',
+        description: 'Create or view customer records.'
+    },
+    {
+        page: 'employee',
+        permission: 'viewEmployee',
+        label: 'Employee',
+        title: 'Employee Management',
+        description: 'Create or view employee records.'
+    },
+    {
+        page: 'account',
+        permission: 'viewAccount',
+        label: 'Account',
+        title: 'Account Management',
+        description: 'Create or view account records.'
+    },
+    {
+        page: 'transaction',
+        permission: 'transactionHistory',
+        label: 'Transactions',
+        title: 'Transactions',
+        description: 'Deposit, withdraw, or view transaction history.'
+    }
+];
+
+function configureEmployeeDashboard(user) {
+    const permissions = Array.isArray(user.permissions) && user.permissions.length > 0
+        ? user.permissions
+        : employeePages
+            .map(page => page.permission)
+            .filter(permission => permission);
+    employeePermissions = new Set(permissions);
+    renderEmployeeNavigation();
+    renderEmployeeDashboardCards();
+    removeUnauthorizedElements();
+    showPage('dashboard');
+}
+
+function hasEmployeePermission(permission) {
+    return !permission || employeePermissions.has(permission);
+}
+
+function openEmployeePage(pageId, loaderName) {
+    showPage(pageId);
+    if (loaderName && typeof window[loaderName] === 'function') {
+        window[loaderName]();
+    }
+}
+
+function renderEmployeeNavigation() {
+    const nav = document.getElementById('employeeNav');
+    if (!nav) {
+        return;
+    }
+
+    const logout = nav.querySelector('a[href="/BankingApp/logout"]');
+    nav.innerHTML = '';
+
+    employeePages
+        .filter(page => hasEmployeePermission(page.permission))
+        .forEach(page => {
+            const link = document.createElement('a');
+            link.href = '#';
+            link.textContent = page.label;
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                openEmployeePage(page.page, page.onOpen);
+            });
+            nav.appendChild(link);
+        });
+
+    if (logout) {
+        nav.appendChild(logout);
+    }
+}
+
+function renderEmployeeDashboardCards() {
+    const container = document.getElementById('employeeDashboardCards');
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = '';
+    employeePages
+        .filter(page => page.page !== 'dashboard')
+        .filter(page => hasEmployeePermission(page.permission))
+        .forEach(page => {
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            const title = document.createElement('h3');
+            title.textContent = page.title;
+            const description = document.createElement('p');
+            description.textContent = page.description;
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.textContent = 'Go';
+            button.addEventListener('click', () =>
+                openEmployeePage(page.page, page.onOpen));
+
+            card.appendChild(title);
+            card.appendChild(description);
+            card.appendChild(button);
+            container.appendChild(card);
+        });
+}
+
+function removeUnauthorizedElements() {
+    document.querySelectorAll('[data-permission]').forEach(element => {
+        if (!hasEmployeePermission(element.dataset.permission)) {
+            element.remove();
+        }
+    });
+}
+
 function showPage(pageId) {
+    const selectedPage = document.getElementById(pageId);
+    if (!selectedPage) {
+        return;
+    }
+
+    const requiredPermission = selectedPage.dataset.pagePermission;
+    if (!hasEmployeePermission(requiredPermission)) {
+        showPage('dashboard');
+        return;
+    }
+
     // Hide all pages
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => page.classList.remove('active'));
 
     // Show selected page
-    document.getElementById(pageId).classList.add('active');
+    selectedPage.classList.add('active');
 }
 
 // Bank Operations

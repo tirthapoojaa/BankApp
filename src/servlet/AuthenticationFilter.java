@@ -1,7 +1,7 @@
 package servlet;
 
-import enums.Role;
 import model.User;
+import service.EmployeeAuthorizationService;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,6 +15,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AuthenticationFilter implements Filter {
+
+    private final EmployeeAuthorizationService authorizationService =
+            new EmployeeAuthorizationService();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -47,28 +50,7 @@ public class AuthenticationFilter implements Filter {
     }
 
     private boolean isAuthorized(HttpServletRequest request, User user) {
-        String path = request.getServletPath();
-
-        if ("/api/auth".equals(path)) {
-            return true;
-        }
-
-        if ("/api/bank".equals(path)
-                || "/api/branch".equals(path)
-                || "/api/customer".equals(path)
-                || "/api/employee".equals(path)) {
-            return user.getRole() == Role.EMPLOYEE;
-        }
-
-        if ("/api/account".equals(path)) {
-            return true;
-        }
-
-        if ("/api/transaction".equals(path)) {
-            return user.getRole() == Role.CUSTOMER;
-        }
-
-        return false;
+        return authorizationService.isAllowed(user, request);
     }
 
     private void sendError(

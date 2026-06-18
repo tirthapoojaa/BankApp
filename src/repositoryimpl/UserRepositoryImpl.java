@@ -177,7 +177,7 @@ public class UserRepositoryImpl implements UserRepository {
                         userRow.getString("user_id"),
                         userRow.getString("password_hash"),
                         mapBranch(resultSet),
-                        EmployeeRole.valueOf(resultSet.getString("employee_role")),
+                        employeeRole(resultSet.getString("employee_role")),
                         resultSet.getDouble("salary"));
             }
         }
@@ -196,5 +196,13 @@ public class UserRepositoryImpl implements UserRepository {
                 branchId,
                 resultSet.getString("branch_name"),
                 bank);
+    }
+
+    private EmployeeRole employeeRole(String value) {
+
+        if ("RELATION_MANAGER".equals(value)) {
+            return EmployeeRole.RELATIONSHIP_MANAGER;
+        }
+        return EmployeeRole.valueOf(value);
     }
 }
