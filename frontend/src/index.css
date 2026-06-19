@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "DM Sans", sans-serif;
+  }
+
+  body {
+    min-width: 320px;
+    margin: 0;
+    color: #000000;
+    background: #C9C4FF;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@keyframes tabSwap {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer components {
+  .brutal-box {
+    @apply border-4 border-brutal-border shadow-brutal;
+  }
+
+  .brutal-control {
+    @apply w-full border-4 border-brutal-border bg-brutal-input px-4 py-3 text-base font-bold text-brutal-text outline-none transition-transform duration-150 placeholder:text-brutal-muted focus:-translate-y-1 focus:shadow-brutal-sm;
+  }
+}

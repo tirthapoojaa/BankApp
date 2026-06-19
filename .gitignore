@@ -23,3 +23,5 @@ logs/
 bin/
 out/
 target/
+frontend/dist/
+frontend/node_modules/
