@@ -9,7 +9,7 @@ export default function Select({
 }) {
   return (
     <label className="block" htmlFor={id}>
-      <span className="mb-2 block font-heading text-sm tracking-[0.08em]">
+      <span className="mb-1 block font-heading text-sm uppercase tracking-[0.08em]">
         {label}
       </span>
       <select
@@ -26,7 +26,7 @@ export default function Select({
         ))}
       </select>
       {error && (
-        <span className="mt-2 block text-sm font-bold text-red-800">
+        <span className="mt-1 block text-sm font-bold text-red-800">
           {error}
         </span>
       )}

@@ -5,18 +5,18 @@ export default {
     extend: {
       colors: {
         brutal: {
-          background: '#C9C4FF',
-          card: '#F5B7CC',
-          accent: '#FFF000',
+          background: '#D8D8D8',
+          card: '#D8FF00',
+          accent: '#000000',
           border: '#000000',
           text: '#000000',
-          muted: '#666666',
+          muted: '#333333',
           input: '#FFFFFF'
         }
       },
       fontFamily: {
-        heading: ['"Archivo Black"', 'sans-serif'],
-        body: ['"DM Sans"', 'sans-serif']
+        heading: ['"Barlow Condensed"', 'sans-serif'],
+        body: ['Inter', 'sans-serif']
       },
       boxShadow: {
         brutal: '8px 8px 0 #000000',

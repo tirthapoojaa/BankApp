@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@900&family=Inter:wght@400;500;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,14 +6,14 @@
 
 @layer base {
   html {
-    font-family: "DM Sans", sans-serif;
+    font-family: Inter, sans-serif;
   }
 
   body {
     min-width: 320px;
     margin: 0;
     color: #000000;
-    background: #C9C4FF;
+    background: #D8D8D8;
   }
 
   * {
@@ -39,6 +39,6 @@
   }
 
   .brutal-control {
-    @apply w-full border-4 border-brutal-border bg-brutal-input px-4 py-3 text-base font-bold text-brutal-text outline-none transition-transform duration-150 placeholder:text-brutal-muted focus:-translate-y-1 focus:shadow-brutal-sm;
+    @apply w-full border-4 border-brutal-border bg-brutal-input px-4 py-2 text-base font-bold text-brutal-text outline-none transition-transform duration-150 placeholder:text-brutal-muted focus:-translate-y-1 focus:shadow-brutal-sm;
   }
 }

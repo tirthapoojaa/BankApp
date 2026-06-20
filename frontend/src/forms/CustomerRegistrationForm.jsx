@@ -84,9 +84,9 @@ export default function CustomerRegistrationForm({ onSuccess }) {
   };
 
   return (
-    <form className="space-y-5" onSubmit={handleSubmit}>
+    <form className="space-y-4" onSubmit={handleSubmit}>
       {formMessage && (
-        <div className="border-4 border-brutal-border bg-white px-4 py-3 text-sm font-bold text-red-800 shadow-brutal-sm">
+        <div className="border-4 border-brutal-border bg-white px-4 py-2 text-sm font-bold text-red-800 shadow-brutal-sm">
           {formMessage}
         </div>
       )}
@@ -148,7 +148,7 @@ export default function CustomerRegistrationForm({ onSuccess }) {
         error={errors.confirmPassword}
       />
 
-      <div className="pt-2">
+      <div className="pt-0">
         <FormButton type="submit" isLoading={isSubmitting}>
           CREATE ACCOUNT
         </FormButton>
