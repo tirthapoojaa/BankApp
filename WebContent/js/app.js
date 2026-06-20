@@ -119,7 +119,7 @@ function renderEmployeeNavigation() {
 }
 
 function setupLogoutLinks() {
-    document.querySelectorAll('[data-logout-link]').forEach(link => {
+    document.querySelectorAll('[data-logout-link], a[href$="/logout"]').forEach(link => {
         link.addEventListener('click', event => {
             event.preventDefault();
             fetch('/BankingApp/logout', {
@@ -128,7 +128,7 @@ function setupLogoutLinks() {
             }).finally(() => {
                 localStorage.clear();
                 sessionStorage.clear();
-                window.location.assign('/login');
+                window.location.assign('http://127.0.0.1:5173/');
             });
         });
     });

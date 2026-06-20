@@ -97,7 +97,7 @@ function renderEmployeeNavigation() {
         return;
     }
 
-    const logout = nav.querySelector('a[href="/BankingApp/logout"]');
+    const logout = nav.querySelector('[data-logout-link]');
     nav.innerHTML = '';
 
     employeePages
@@ -116,6 +116,22 @@ function renderEmployeeNavigation() {
     if (logout) {
         nav.appendChild(logout);
     }
+}
+
+function setupLogoutLinks() {
+    document.querySelectorAll('[data-logout-link], a[href$="/logout"]').forEach(link => {
+        link.addEventListener('click', event => {
+            event.preventDefault();
+            fetch('/BankingApp/logout', {
+                method: 'POST',
+                credentials: 'include'
+            }).finally(() => {
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.assign('http://127.0.0.1:5173/');
+            });
+        });
+    });
 }
 
 function renderEmployeeDashboardCards() {
@@ -676,5 +692,6 @@ function showResult(elementId, message, isSuccess) {
 
 // Show dashboard on page load
 document.addEventListener('DOMContentLoaded', () => {
+    setupLogoutLinks();
     showPage('dashboard');
 });
