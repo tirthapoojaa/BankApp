@@ -404,5 +404,4 @@ Feel free to fork the repository and submit a pull request.
 
 # 📄 License
 
-This project is created for educational purposes.<img width="1440" height="771" alt="Screenshot 2026-06-22 at 12 09 40 PM" src="https://github.com/user-attachments/assets/f8be140e-0e73-4616-b348-56877bc498e2" />
-<img width="1440" height="771" alt="Screenshot 2026-06-22 at 12 09 40 PM" src="https://github.com/user-attachments/assets/55a190f0-61ba-4f8f-bbd3-592d74de9637" />
+This project is created for educational purposes.
