@@ -145,33 +145,35 @@ export default function EmployeeRegistrationForm({ onSuccess }) {
     : [{ value: '', label: 'No branches available' }];
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
+    <form className="space-y-5" onSubmit={handleSubmit}>
       {formMessage && (
-        <div className="border-4 border-brutal-border bg-white px-4 py-2 text-sm font-bold text-red-800 shadow-brutal-sm">
+        <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-[#DC2626]">
           {formMessage}
         </div>
       )}
 
-      <Input
-        id="employeeId"
-        label="Employee ID"
-        type="number"
-        min="1"
-        value={formData.employeeId}
-        onChange={updateField('employeeId')}
-        placeholder="Enter employee ID"
-        error={errors.employeeId}
-      />
+      <div className="grid gap-5 md:grid-cols-2">
+        <Input
+          id="employeeId"
+          label="Employee ID"
+          type="number"
+          min="1"
+          value={formData.employeeId}
+          onChange={updateField('employeeId')}
+          placeholder="Enter employee ID"
+          error={errors.employeeId}
+        />
 
-      <Input
-        id="employeeFullName"
-        label="Full Name"
-        value={formData.fullName}
-        onChange={updateField('fullName')}
-        placeholder="Enter full name"
-        autoComplete="name"
-        error={errors.fullName}
-      />
+        <Input
+          id="employeeFullName"
+          label="Full Name"
+          value={formData.fullName}
+          onChange={updateField('fullName')}
+          placeholder="Enter full name"
+          autoComplete="name"
+          error={errors.fullName}
+        />
+      </div>
 
       <Input
         id="employeeUserId"
@@ -183,52 +185,56 @@ export default function EmployeeRegistrationForm({ onSuccess }) {
         error={errors.userId}
       />
 
-      <PasswordInput
-        id="employeePassword"
-        label="Password"
-        value={formData.password}
-        onChange={updateField('password')}
-        isVisible={visiblePasswordField === 'password'}
-        onToggleVisibility={() =>
-          setVisiblePasswordField((currentValue) =>
-            currentValue === 'password' ? '' : 'password')}
-        autoComplete="new-password"
-        error={errors.password}
-      />
+      <div className="grid gap-5 md:grid-cols-2">
+        <PasswordInput
+          id="employeePassword"
+          label="Password"
+          value={formData.password}
+          onChange={updateField('password')}
+          isVisible={visiblePasswordField === 'password'}
+          onToggleVisibility={() =>
+            setVisiblePasswordField((currentValue) =>
+              currentValue === 'password' ? '' : 'password')}
+          autoComplete="new-password"
+          error={errors.password}
+        />
 
-      <PasswordInput
-        id="employeeConfirmPassword"
-        label="Confirm Password"
-        value={formData.confirmPassword}
-        onChange={updateField('confirmPassword')}
-        isVisible={visiblePasswordField === 'confirmPassword'}
-        onToggleVisibility={() =>
-          setVisiblePasswordField((currentValue) =>
-            currentValue === 'confirmPassword' ? '' : 'confirmPassword')}
-        autoComplete="new-password"
-        error={errors.confirmPassword}
-      />
+        <PasswordInput
+          id="employeeConfirmPassword"
+          label="Confirm Password"
+          value={formData.confirmPassword}
+          onChange={updateField('confirmPassword')}
+          isVisible={visiblePasswordField === 'confirmPassword'}
+          onToggleVisibility={() =>
+            setVisiblePasswordField((currentValue) =>
+              currentValue === 'confirmPassword' ? '' : 'confirmPassword')}
+          autoComplete="new-password"
+          error={errors.confirmPassword}
+        />
+      </div>
 
-      <Select
-        id="employeeDesignation"
-        label="Designation"
-        value={formData.employeeRole}
-        onChange={updateField('employeeRole')}
-        options={designationOptions}
-        error={errors.employeeRole}
-      />
+      <div className="grid gap-5 md:grid-cols-2">
+        <Select
+          id="employeeDesignation"
+          label="Designation"
+          value={formData.employeeRole}
+          onChange={updateField('employeeRole')}
+          options={designationOptions}
+          error={errors.employeeRole}
+        />
 
-      <Input
-        id="employeeSalary"
-        label="Salary"
-        type="number"
-        min="0"
-        step="0.01"
-        value={formData.salary}
-        onChange={updateField('salary')}
-        placeholder="Enter salary"
-        error={errors.salary}
-      />
+        <Input
+          id="employeeSalary"
+          label="Salary"
+          type="number"
+          min="0"
+          step="0.01"
+          value={formData.salary}
+          onChange={updateField('salary')}
+          placeholder="Enter salary"
+          error={errors.salary}
+        />
+      </div>
 
       <Select
         id="employeeBranch"

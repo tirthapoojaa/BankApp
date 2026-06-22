@@ -5,23 +5,23 @@ export default {
     extend: {
       colors: {
         brutal: {
-          background: '#D8D8D8',
-          card: '#D8FF00',
-          accent: '#000000',
-          border: '#000000',
-          text: '#000000',
-          muted: '#333333',
+          background: '#F4F6F8',
+          card: '#FFFFFF',
+          accent: '#173A6E',
+          border: '#D8DEE8',
+          text: '#1E293B',
+          muted: '#64748B',
           input: '#FFFFFF'
         }
       },
       fontFamily: {
-        heading: ['"Barlow Condensed"', 'sans-serif'],
+        heading: ['"Playfair Display"', 'serif'],
         body: ['Inter', 'sans-serif']
       },
       boxShadow: {
-        brutal: '8px 8px 0 #000000',
-        'brutal-sm': '5px 5px 0 #000000',
-        'brutal-active': '3px 3px 0 #000000'
+        brutal: '0 24px 70px rgba(16, 42, 86, 0.12)',
+        'brutal-sm': '0 10px 28px rgba(16, 42, 86, 0.10)',
+        'brutal-active': '0 4px 14px rgba(16, 42, 86, 0.10)'
       }
     }
   },

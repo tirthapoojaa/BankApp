@@ -29,13 +29,13 @@ export default function LoginCard() {
   };
 
   return (
-    <section className="mx-auto w-[624px] max-w-[90vw] brutal-box bg-brutal-card">
-      <div className="space-y-6 px-5 py-6 sm:px-8 sm:py-8">
+    <section className="mx-auto w-full">
+      <div className="space-y-8">
         <CardHeader />
         <TabBar activeTab={activeTab} onChange={handleTabChange} />
 
         {successMessage && (
-          <div className="border-4 border-brutal-border bg-black px-4 py-2 text-sm font-bold uppercase tracking-[0.08em] text-brutal-card shadow-brutal-sm">
+          <div className="rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-semibold text-green-700 shadow-sm">
             {successMessage}
           </div>
         )}

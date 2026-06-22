@@ -6,7 +6,7 @@ const tabs = [
 
 export default function Tabs({ selectedTab, onSelectTab }) {
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3" role="tablist">
+    <div className="grid grid-cols-1 gap-1 rounded-2xl bg-slate-100 p-1 sm:grid-cols-3" role="tablist">
       {tabs.map((tab) => {
         const isActive = selectedTab === tab.id;
 
@@ -17,8 +17,10 @@ export default function Tabs({ selectedTab, onSelectTab }) {
             role="tab"
             aria-selected={isActive}
             onClick={() => onSelectTab(tab.id)}
-            className={`border-4 border-brutal-border px-3 py-2 font-heading text-xs uppercase tracking-[0.08em] shadow-brutal-sm transition-transform duration-150 hover:-translate-y-0.5 active:translate-x-1 active:translate-y-1 active:shadow-brutal-active sm:text-[0.78rem] ${
-              isActive ? 'bg-black text-brutal-card' : 'bg-brutal-card text-black'
+            className={`rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-200 ${
+              isActive
+                ? 'bg-white text-[#173A6E] shadow-sm'
+                : 'text-brutal-muted hover:bg-white/70 hover:text-brutal-text'
             }`}
           >
             {tab.label}

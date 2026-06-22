@@ -1,8 +1,8 @@
 export default function Footer() {
   return (
-    <footer className="flex items-center justify-between border-t-4 border-brutal-border bg-black px-6 py-4 font-heading text-xs uppercase tracking-[0.18em] text-white sm:text-sm">
+    <footer className="mt-8 flex flex-col gap-2 border-t border-brutal-border pt-5 text-xs text-brutal-muted sm:flex-row sm:items-center sm:justify-between">
       <span>BANKINGAPP</span>
-      <span>ONE LOGIN. ALL ACCESS.</span>
+      <span>Protected access. All activity may be monitored.</span>
     </footer>
   );
 }

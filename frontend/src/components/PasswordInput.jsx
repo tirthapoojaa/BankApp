@@ -29,13 +29,13 @@ export default function PasswordInput({
           type="button"
           aria-label={isVisible ? 'Hide password' : 'Show password'}
           onClick={onToggleVisibility}
-          className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center border-2 border-brutal-border bg-black text-white transition-transform duration-150 hover:-translate-y-[56%] active:translate-y-[-44%]"
+          className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-lg text-brutal-muted transition duration-200 hover:bg-slate-100 hover:text-[#173A6E]"
         >
           <Icon size={20} strokeWidth={3} />
         </button>
       </div>
       {error && (
-        <span className="mt-1 block text-sm font-bold text-red-800">
+        <span className="mt-2 block text-sm font-medium text-[#DC2626]">
           {error}
         </span>
       )}

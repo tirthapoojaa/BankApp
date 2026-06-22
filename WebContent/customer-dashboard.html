@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Dashboard | BankingApp</title>
-    <link rel="stylesheet" href="css/style.css?v=fintech-dashboard-20260620">
+    <link rel="stylesheet" href="css/style.css?v=professional-banking-20260622">
 </head>
 <body>
     <div class="navbar">
@@ -19,6 +19,23 @@
             </nav>
         </div>
     </div>
+
+    <header class="dashboard-topbar">
+        <div>
+            <p class="breadcrumb">Customer Portal / Dashboard</p>
+            <h1>Customer Dashboard</h1>
+        </div>
+        <div class="topbar-actions">
+            <label class="dashboard-search" for="dashboardSearch">
+                <span>Search</span>
+                <input id="dashboardSearch" type="search" placeholder="Search accounts">
+            </label>
+            <button type="button" class="notification-button" aria-label="Notifications">●</button>
+            <div class="profile-chip">
+                <span data-user-name>Customer</span>
+            </div>
+        </div>
+    </header>
 
     <main class="container">
         <section id="dashboard" class="page active">

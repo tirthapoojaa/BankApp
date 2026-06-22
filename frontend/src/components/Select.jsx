@@ -9,7 +9,7 @@ export default function Select({
 }) {
   return (
     <label className="block" htmlFor={id}>
-      <span className="mb-1 block font-heading text-sm uppercase tracking-[0.08em]">
+      <span className="mb-2 block text-sm font-medium text-brutal-text">
         {label}
       </span>
       <select
@@ -17,7 +17,7 @@ export default function Select({
         value={value}
         onChange={onChange}
         disabled={disabled}
-        className="brutal-control appearance-none disabled:cursor-not-allowed disabled:bg-white/70"
+        className="brutal-control appearance-none disabled:cursor-not-allowed disabled:bg-slate-100"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -26,7 +26,7 @@ export default function Select({
         ))}
       </select>
       {error && (
-        <span className="mt-1 block text-sm font-bold text-red-800">
+        <span className="mt-2 block text-sm font-medium text-[#DC2626]">
           {error}
         </span>
       )}

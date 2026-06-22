@@ -1,11 +1,14 @@
 export default function Header() {
   return (
-    <header className="text-center">
-      <p className="font-heading text-[clamp(2.1rem,7vw,4rem)] uppercase leading-none tracking-[-0.06em] text-brutal-text">
-        bankingapp
+    <header className="space-y-3">
+      <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#C8A34D]">
+        BankingApp Online
       </p>
-      <p className="mt-2 inline-block border-4 border-brutal-border bg-black px-4 py-2 font-heading text-sm uppercase tracking-[0.22em] text-brutal-card shadow-brutal-sm">
-        WELCOME BACK
+      <h2 className="font-heading text-[clamp(2.6rem,6vw,4.5rem)] font-bold leading-[0.95] tracking-[-0.04em] text-brutal-text">
+        Welcome back
+      </h2>
+      <p className="max-w-xl text-base leading-7 text-brutal-muted">
+        Sign in or create a new profile to continue to your banking dashboard.
       </p>
     </header>
   );

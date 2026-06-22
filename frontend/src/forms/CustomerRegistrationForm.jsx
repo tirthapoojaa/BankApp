@@ -84,33 +84,35 @@ export default function CustomerRegistrationForm({ onSuccess }) {
   };
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
+    <form className="space-y-5" onSubmit={handleSubmit}>
       {formMessage && (
-        <div className="border-4 border-brutal-border bg-white px-4 py-2 text-sm font-bold text-red-800 shadow-brutal-sm">
+        <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-[#DC2626]">
           {formMessage}
         </div>
       )}
 
-      <Input
-        id="customerId"
-        label="Customer ID"
-        type="number"
-        min="1"
-        value={formData.customerId}
-        onChange={updateField('customerId')}
-        placeholder="Enter customer ID"
-        error={errors.customerId}
-      />
+      <div className="grid gap-5 md:grid-cols-2">
+        <Input
+          id="customerId"
+          label="Customer ID"
+          type="number"
+          min="1"
+          value={formData.customerId}
+          onChange={updateField('customerId')}
+          placeholder="Enter customer ID"
+          error={errors.customerId}
+        />
 
-      <Input
-        id="customerFullName"
-        label="Full Name"
-        value={formData.fullName}
-        onChange={updateField('fullName')}
-        placeholder="Enter full name"
-        autoComplete="name"
-        error={errors.fullName}
-      />
+        <Input
+          id="customerFullName"
+          label="Full Name"
+          value={formData.fullName}
+          onChange={updateField('fullName')}
+          placeholder="Enter full name"
+          autoComplete="name"
+          error={errors.fullName}
+        />
+      </div>
 
       <Input
         id="customerUserId"
@@ -122,31 +124,33 @@ export default function CustomerRegistrationForm({ onSuccess }) {
         error={errors.userId}
       />
 
-      <PasswordInput
-        id="customerPassword"
-        label="Password"
-        value={formData.password}
-        onChange={updateField('password')}
-        isVisible={visiblePasswordField === 'password'}
-        onToggleVisibility={() =>
-          setVisiblePasswordField((currentValue) =>
-            currentValue === 'password' ? '' : 'password')}
-        autoComplete="new-password"
-        error={errors.password}
-      />
+      <div className="grid gap-5 md:grid-cols-2">
+        <PasswordInput
+          id="customerPassword"
+          label="Password"
+          value={formData.password}
+          onChange={updateField('password')}
+          isVisible={visiblePasswordField === 'password'}
+          onToggleVisibility={() =>
+            setVisiblePasswordField((currentValue) =>
+              currentValue === 'password' ? '' : 'password')}
+          autoComplete="new-password"
+          error={errors.password}
+        />
 
-      <PasswordInput
-        id="customerConfirmPassword"
-        label="Confirm Password"
-        value={formData.confirmPassword}
-        onChange={updateField('confirmPassword')}
-        isVisible={visiblePasswordField === 'confirmPassword'}
-        onToggleVisibility={() =>
-          setVisiblePasswordField((currentValue) =>
-            currentValue === 'confirmPassword' ? '' : 'confirmPassword')}
-        autoComplete="new-password"
-        error={errors.confirmPassword}
-      />
+        <PasswordInput
+          id="customerConfirmPassword"
+          label="Confirm Password"
+          value={formData.confirmPassword}
+          onChange={updateField('confirmPassword')}
+          isVisible={visiblePasswordField === 'confirmPassword'}
+          onToggleVisibility={() =>
+            setVisiblePasswordField((currentValue) =>
+              currentValue === 'confirmPassword' ? '' : 'confirmPassword')}
+          autoComplete="new-password"
+          error={errors.confirmPassword}
+        />
+      </div>
 
       <div className="pt-0">
         <FormButton type="submit" isLoading={isSubmitting}>

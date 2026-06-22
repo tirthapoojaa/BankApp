@@ -79,9 +79,9 @@ export default function LoginForm() {
   };
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
+    <form className="space-y-5" onSubmit={handleSubmit}>
       {formMessage && (
-        <div className="border-4 border-brutal-border bg-white px-4 py-2 text-sm font-bold text-red-800 shadow-brutal-sm">
+        <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-[#DC2626]">
           {formMessage}
         </div>
       )}
